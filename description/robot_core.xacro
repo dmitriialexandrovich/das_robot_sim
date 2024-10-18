@@ -4,20 +4,23 @@
     <xacro:include filename="inertial_macros.xacro"/>
 
 
-    <xacro:property name="chassis_length" value="0.335"/>
-    <xacro:property name="chassis_width" value="0.265"/>
-    <xacro:property name="chassis_height" value="0.138"/>
+    <xacro:property name="chassis_length" value="0.200"/>
+    <xacro:property name="chassis_width" value="0.160"/>
+    <xacro:property name="chassis_height" value="0.050"/>
     <xacro:property name="chassis_mass" value="1.0"/>
-    <xacro:property name="wheel_radius" value="0.033"/>
-    <xacro:property name="wheel_thickness" value="0.026"/>
+    <xacro:property name="chassis_offset_x" value="-0.06"/>
+    <xacro:property name="chassis_offset_y" value="0"/>
+    <xacro:property name="chassis_offset_z" value="0.095"/>
+    <xacro:property name="wheel_radius" value="0.035"/>
+    <xacro:property name="wheel_thickness" value="0.020"/>
     <xacro:property name="wheel_mass" value="0.05"/>
     <xacro:property name="wheel_offset_x" value="0.226"/>
-    <xacro:property name="wheel_offset_y" value="0.1485"/>
+    <xacro:property name="wheel_offset_y" value="0.035"/>
     <xacro:property name="wheel_offset_z" value="0.01"/>
-    <xacro:property name="caster_wheel_radius" value="0.01"/>
-    <xacro:property name="caster_wheel_mass" value="0.01"/>
-    <xacro:property name="caster_wheel_offset_x" value="0.075"/>
-    <xacro:property name="caster_wheel_offset_z" value="${wheel_offset_z - wheel_radius + caster_wheel_radius}"/>
+    <xacro:property name="caster_wheel_radius" value="0.02"/>
+    <xacro:property name="caster_wheel_mass" value="0.5"/>
+    <xacro:property name="caster_wheel_offset_x" value="-0.12"/>
+    <xacro:property name="caster_wheel_offset_z" value="-0.01"/>
 
     <material name="white">
         <color rgba="1 1 1 1" />
@@ -62,12 +65,12 @@
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis"/>
-        <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}"/>
+        <origin xyz="${chassis_offset_x} ${chassis_offset_y} ${chassis_offset_z}"/>
     </joint>
 
     <link name="chassis">
         <visual>
-            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
+            <origin xyz="0 0 0"/>
             <geometry>
                 <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
             </geometry>
@@ -155,7 +158,7 @@
     <!-- CASTER WHEEL LINK -->
 
     <joint name="caster_wheel_joint" type="fixed">
-        <parent link="chassis"/>
+        <parent link="base_link"/>
         <child link="caster_wheel"/>
         <origin xyz="${caster_wheel_offset_x} 0 ${caster_wheel_offset_z}"/>
     </joint>
